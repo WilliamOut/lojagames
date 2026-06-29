@@ -18,6 +18,7 @@ public class MainView extends javax.swing.JFrame {
     public MainView() {
         initComponents();
         setLocationRelativeTo(null);
+        System.out.println("largura = " +jPanelConteudo.getWidth()  + ", altura = " + jPanelConteudo.getHeight());
     }
 
     /**
@@ -169,11 +170,11 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        trocarTela(new InicioView());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        trocarTela(new EstoqueView());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -204,6 +205,8 @@ public class MainView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainView().setVisible(true));
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -217,4 +220,13 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JPanel jPanelSideBar;
     // End of variables declaration//GEN-END:variables
+    public void trocarTela(javax.swing.JPanel novaTela) {
+        jPanelConteudo.removeAll();
+        jPanelConteudo.add(novaTela, java.awt.BorderLayout.CENTER);
+        
+        //recalcula layout e redesenha componentes
+        jPanelConteudo.revalidate();
+        jPanelConteudo.repaint();
+    }
+
 }
