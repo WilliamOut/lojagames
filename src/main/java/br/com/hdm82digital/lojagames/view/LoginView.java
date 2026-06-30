@@ -213,7 +213,10 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JLabelCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabelCriarContaMouseClicked
-        // TODO add your handling code here:
+        this.dispose();
+        CadastroView cadastroView = new CadastroView();
+        cadastroView.setLocationRelativeTo(null);
+        cadastroView.setVisible(true);
     }//GEN-LAST:event_JLabelCriarContaMouseClicked
 
     private void jLabelEsquecerSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEsquecerSenhaMouseClicked

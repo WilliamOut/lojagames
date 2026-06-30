@@ -184,4 +184,6 @@ public class InicioView extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelEstoque;
     private javax.swing.JPanel jPanelVendas;
     // End of variables declaration//GEN-END:variables
+    
+
 }

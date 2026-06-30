@@ -216,6 +216,10 @@ public class CadastroView extends javax.swing.JFrame {
 
     private void JLabelLogarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLabelLogarContaMouseClicked
         // TODO add your handling code here:
+        this.dispose();
+        LoginView loginView = new LoginView();
+        loginView.setLocationRelativeTo(null);
+        loginView.setVisible(true);
     }//GEN-LAST:event_JLabelLogarContaMouseClicked
 
     /**

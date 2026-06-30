@@ -18,7 +18,7 @@ public class MainView extends javax.swing.JFrame {
     public MainView() {
         initComponents();
         setLocationRelativeTo(null);
-        System.out.println("largura = " +jPanelConteudo.getWidth()  + ", altura = " + jPanelConteudo.getHeight());
+        trocarTela(new InicioView());
     }
 
     /**
@@ -190,17 +190,10 @@ public class MainView extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        javax.swing.UIManager.put("Button.arc", 15);
+        javax.swing.UIManager.put("Component.arc", 15); // Afeta TextFields, PasswordFields, etc.
+        javax.swing.UIManager.put("TextComponent.arc", 15);
+        com.formdev.flatlaf.FlatDarkLaf.setup();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainView().setVisible(true));
