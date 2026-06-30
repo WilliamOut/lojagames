@@ -16,32 +16,19 @@ public class EstoqueView extends javax.swing.JPanel {
     public EstoqueView() {
         initComponents();
 
-        jTextFieldNomeJogo.putClientProperty("JComponent.roundRect", true);
-        jTextFieldPreco.putClientProperty("JComponent.roundRect", true);
-        jTextFieldQtd.putClientProperty("JComponent.roundRect", true);
-
-        jTextFieldNomeJogo.putClientProperty("JTextField.placeholderText", "Ex: GTA V, Elden Ring...");
-        jTextFieldPreco.putClientProperty("JTextField.placeholderText", "0.00");
-        jTextFieldQtd.putClientProperty("JTextField.placeholderText", "Qtd");
-
-        jButtonAdicionarJogo.putClientProperty("JButton.buttonType", "roundRect");
-        jButtonAdicionarJogo.setBackground(new java.awt.Color(46, 204, 113));
-        jButtonAdicionarJogo.setForeground(new java.awt.Color(0, 0, 0));
-
-        jTableEstoque.putClientProperty("JComponent.roundRect", true);
-
-        jTableEstoque.setShowHorizontalLines(true);
-        jTableEstoque.setShowVerticalLines(false);
-
-        // pinta o fundo das células que contêm os dados
-        jTableEstoque.setBackground(new java.awt.Color(44, 52, 60)); // Mesmo tom dos cards (#2C343C)
+        jTableEstoque.setBackground(new java.awt.Color(44, 52, 60)); // #2C343C
         jTableEstoque.setForeground(new java.awt.Color(255, 255, 255)); // Texto branco
 
+        // Pinta a área vazia do ScrollPane para não ficar cinza-claro
         if (jTableEstoque.getParent() != null && jTableEstoque.getParent().getParent() instanceof javax.swing.JScrollPane) {
             javax.swing.JScrollPane scroll = (javax.swing.JScrollPane) jTableEstoque.getParent().getParent();
             scroll.getViewport().setBackground(new java.awt.Color(44, 52, 60));
-            scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder()); // Remove aquela borda branca feia
+            scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder()); // Remove bordas brancas feias
         }
+
+        // Configuração visual das linhas (Estilo Zebrado)
+        jTableEstoque.setShowHorizontalLines(true);
+        jTableEstoque.setShowVerticalLines(false);
 
     }
 
@@ -72,31 +59,35 @@ public class EstoqueView extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("GERENCIAMENTO DE ESTOQUE");
 
-        jLabel2.setFont(new java.awt.Font("Montserrat", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(160, 170, 178));
         jLabel2.setText("Jogo:");
 
         jTextFieldNomeJogo.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNomeJogo.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jTextFieldNomeJogo.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldNomeJogo.addActionListener(this::jTextFieldNomeJogoActionPerformed);
 
-        jLabel3.setFont(new java.awt.Font("Montserrat", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(160, 170, 178));
         jLabel3.setText("Preço:");
 
         jTextFieldPreco.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldPreco.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jTextFieldPreco.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldPreco.addActionListener(this::jTextFieldPrecoActionPerformed);
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Montserrat", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(160, 170, 178));
         jLabel4.setText("Qtd:");
 
         jTextFieldQtd.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldQtd.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jTextFieldQtd.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldQtd.addActionListener(this::jTextFieldQtdActionPerformed);
 
+        jTableEstoque.setFont(new java.awt.Font("Montserrat", 0, 20)); // NOI18N
         jTableEstoque.setForeground(new java.awt.Color(255, 255, 255));
         jTableEstoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,7 +110,7 @@ public class EstoqueView extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTableEstoque);
 
-        jButtonAdicionarJogo.setText("Adicionar");
+        jButtonAdicionarJogo.setText("Cadastrar");
         jButtonAdicionarJogo.addActionListener(this::jButtonAdicionarJogoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,56 +120,64 @@ public class EstoqueView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNomeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonAdicionarJogo)))
-                .addContainerGap())
+                        .addComponent(jButtonAdicionarJogo)
+                        .addGap(0, 243, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldNomeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextFieldNomeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextFieldPreco)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldQtd)
+                                .addComponent(jLabel3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
                         .addComponent(jButtonAdicionarJogo)))
-                .addGap(65, 65, 65)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldNomeJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeJogoActionPerformed
+    private void jTextFieldQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNomeJogoActionPerformed
+    }//GEN-LAST:event_jTextFieldQtdActionPerformed
 
     private void jTextFieldPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPrecoActionPerformed
 
-    private void jTextFieldQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdActionPerformed
+    private void jTextFieldNomeJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeJogoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldQtdActionPerformed
+    }//GEN-LAST:event_jTextFieldNomeJogoActionPerformed
 
     private void jButtonAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarJogoActionPerformed
         // TODO add your handling code here:
