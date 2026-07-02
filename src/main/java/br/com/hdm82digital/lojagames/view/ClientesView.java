@@ -4,6 +4,10 @@
  */
 package br.com.hdm82digital.lojagames.view;
 
+import br.com.hdm82digital.lojagames.repository.ClienteRepository;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author will
@@ -52,6 +56,8 @@ public class ClientesView extends javax.swing.JPanel {
         jButtonAdicionarJogo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableClientes = new javax.swing.JTable();
+        jButtonEditarJogo = new javax.swing.JButton();
+        jButtonApagarJogo = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(33, 39, 45));
         setPreferredSize(new java.awt.Dimension(950, 650));
@@ -96,7 +102,11 @@ public class ClientesView extends javax.swing.JPanel {
         jTextFieldIDGame.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldIDGame.addActionListener(this::jTextFieldIDGameActionPerformed);
 
+        jButtonAdicionarJogo.setBackground(new java.awt.Color(46, 204, 113));
+        jButtonAdicionarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
+        jButtonAdicionarJogo.setForeground(new java.awt.Color(0, 0, 0));
         jButtonAdicionarJogo.setText("Cadastrar");
+        jButtonAdicionarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonAdicionarJogo.addActionListener(this::jButtonAdicionarJogoActionPerformed);
 
         JTableClientes.setFont(new java.awt.Font("Montserrat", 0, 20)); // NOI18N
@@ -119,7 +129,26 @@ public class ClientesView extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        JTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTableClientes);
+
+        jButtonEditarJogo.setBackground(new java.awt.Color(241, 196, 15));
+        jButtonEditarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
+        jButtonEditarJogo.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonEditarJogo.setText("Editar");
+        jButtonEditarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonEditarJogo.addActionListener(this::jButtonEditarJogoActionPerformed);
+
+        jButtonApagarJogo.setBackground(new java.awt.Color(231, 76, 60));
+        jButtonApagarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
+        jButtonApagarJogo.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonApagarJogo.setText("Apagar");
+        jButtonApagarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonApagarJogo.addActionListener(this::jButtonApagarJogoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -128,57 +157,64 @@ public class ClientesView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldIDGame, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonAdicionarJogo)
-                                .addGap(0, 8, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldIDGame, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(289, 289, 289)
+                        .addComponent(jButtonAdicionarJogo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonEditarJogo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonApagarJogo)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldIDGame, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jButtonAdicionarJogo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldIDGame, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAdicionarJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEditarJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonApagarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -203,10 +239,57 @@ public class ClientesView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAdicionarJogoActionPerformed
 
+    private void jButtonEditarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarJogoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEditarJogoActionPerformed
+
+    private void jButtonApagarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApagarJogoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonApagarJogoActionPerformed
+
+    private void JTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableClientesMouseClicked
+        int linhaSelecionada = JTableClientes.getSelectedRow();
+
+        if (linhaSelecionada != -1) {
+            String id = JTableClientes.getValueAt(linhaSelecionada, 0).toString();
+            String cliente = JTableClientes.getValueAt(linhaSelecionada, 1).toString();
+            String email = JTableClientes.getValueAt(linhaSelecionada, 2).toString();
+            String telefone = JTableClientes.getValueAt(linhaSelecionada, 3).toString();
+            String IDGame = JTableClientes.getValueAt(linhaSelecionada, 4).toString();
+
+            jTextFieldNomeCliente.setText(cliente);
+            jTextFieldEmail.setText(email);
+            jTextFieldTelefone.setText(telefone);
+            jTextFieldIDGame.setText(IDGame);
+
+            // id temporario
+            jTextFieldNomeCliente.setName(id);
+        }
+    }//GEN-LAST:event_JTableClientesMouseClicked
+
+    public void atualizarTabela() {
+        ClienteRepository repo = new ClienteRepository();
+        List<Object[]> clientes = repo.listarTodos();
+        DefaultTableModel modelo = (DefaultTableModel) JTableClientes.getModel();
+        modelo.setRowCount(0);
+        for (Object[] cliente : clientes) {
+            modelo.addRow(cliente);
+        }
+    }
+
+    private void limparCampos() {
+        jTextFieldNomeCliente.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldTelefone.setText("");
+        jTextFieldIDGame.setText("");
+        jTextFieldNomeCliente.setName("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JTableClientes;
     private javax.swing.JButton jButtonAdicionarJogo;
+    private javax.swing.JButton jButtonApagarJogo;
+    private javax.swing.JButton jButtonEditarJogo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

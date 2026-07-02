@@ -125,21 +125,24 @@ public class EstoqueView extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTableEstoque);
 
         jButtonAdicionarJogo.setBackground(new java.awt.Color(46, 204, 113));
-        jButtonAdicionarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonAdicionarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
         jButtonAdicionarJogo.setForeground(new java.awt.Color(0, 0, 0));
         jButtonAdicionarJogo.setText("Cadastrar");
+        jButtonAdicionarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonAdicionarJogo.addActionListener(this::jButtonAdicionarJogoActionPerformed);
 
         jButtonEditarJogo.setBackground(new java.awt.Color(241, 196, 15));
-        jButtonEditarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonEditarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
         jButtonEditarJogo.setForeground(new java.awt.Color(0, 0, 0));
         jButtonEditarJogo.setText("Editar");
+        jButtonEditarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonEditarJogo.addActionListener(this::jButtonEditarJogoActionPerformed);
 
         jButtonApagarJogo.setBackground(new java.awt.Color(231, 76, 60));
-        jButtonApagarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonApagarJogo.setFont(new java.awt.Font("Montserrat", 0, 10)); // NOI18N
         jButtonApagarJogo.setForeground(new java.awt.Color(255, 255, 255));
         jButtonApagarJogo.setText("Apagar");
+        jButtonApagarJogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonApagarJogo.addActionListener(this::jButtonApagarJogoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
