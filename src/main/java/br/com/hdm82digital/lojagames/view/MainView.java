@@ -115,15 +115,15 @@ public class MainView extends javax.swing.JFrame {
             jPanelSideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelSideBarLayout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGap(33, 33, 33)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jPanelPrincipal.add(jPanelSideBar, java.awt.BorderLayout.LINE_START);

@@ -4,6 +4,12 @@
  */
 package br.com.hdm82digital.lojagames.view;
 
+import br.com.hdm82digital.lojagames.repository.JogoRepository;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.checkerframework.framework.qual.QualifierArgument;
+
 /**
  *
  * @author will
@@ -30,6 +36,7 @@ public class EstoqueView extends javax.swing.JPanel {
         jTableEstoque.setShowHorizontalLines(true);
         jTableEstoque.setShowVerticalLines(false);
 
+        atualizarTabela();
     }
 
     /**
@@ -51,6 +58,8 @@ public class EstoqueView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEstoque = new javax.swing.JTable();
         jButtonAdicionarJogo = new javax.swing.JButton();
+        jButtonEditarJogo = new javax.swing.JButton();
+        jButtonApagarJogo = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(33, 39, 45));
         setPreferredSize(new java.awt.Dimension(950, 650));
@@ -108,10 +117,30 @@ public class EstoqueView extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        jTableEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableEstoqueMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableEstoque);
 
+        jButtonAdicionarJogo.setBackground(new java.awt.Color(46, 204, 113));
+        jButtonAdicionarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonAdicionarJogo.setForeground(new java.awt.Color(0, 0, 0));
         jButtonAdicionarJogo.setText("Cadastrar");
         jButtonAdicionarJogo.addActionListener(this::jButtonAdicionarJogoActionPerformed);
+
+        jButtonEditarJogo.setBackground(new java.awt.Color(241, 196, 15));
+        jButtonEditarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonEditarJogo.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonEditarJogo.setText("Editar");
+        jButtonEditarJogo.addActionListener(this::jButtonEditarJogoActionPerformed);
+
+        jButtonApagarJogo.setBackground(new java.awt.Color(231, 76, 60));
+        jButtonApagarJogo.setFont(new java.awt.Font("Adwaita Sans", 0, 10)); // NOI18N
+        jButtonApagarJogo.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonApagarJogo.setText("Apagar");
+        jButtonApagarJogo.addActionListener(this::jButtonApagarJogoActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -120,6 +149,10 @@ public class EstoqueView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel2)
@@ -133,22 +166,22 @@ public class EstoqueView extends javax.swing.JPanel {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonAdicionarJogo)
-                        .addGap(0, 243, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(21, 21, 21)
+                        .addComponent(jButtonAdicionarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButtonEditarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonApagarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(79, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextFieldNomeJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,11 +190,12 @@ public class EstoqueView extends javax.swing.JPanel {
                                 .addComponent(jTextFieldPreco)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextFieldQtd)
-                                .addComponent(jLabel3))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jButtonAdicionarJogo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addComponent(jButtonAdicionarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonEditarJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonApagarJogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(61, 61, 61)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -180,12 +214,117 @@ public class EstoqueView extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldNomeJogoActionPerformed
 
     private void jButtonAdicionarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarJogoActionPerformed
-        // TODO add your handling code here:
+        String titulo = jTextFieldNomeJogo.getText().trim();
+        String precoStr = jTextFieldPreco.getText().trim();
+        String qtdStr = jTextFieldQtd.getText().trim();
+
+        if (titulo.isEmpty() || precoStr.isEmpty() || qtdStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos do jogo!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            double preco = Double.parseDouble(precoStr.replace(",", "."));
+            int quantidade = Integer.parseInt(qtdStr);
+
+            JogoRepository repo = new JogoRepository();
+            boolean sucesso = repo.salvar(titulo, preco, quantidade);
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this, "Jogo adicionado ao estoque com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
+                atualizarTabela();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao salvar o jogo no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Preço ou Quantidade informados são inválidos!", "Erro de Digitação", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAdicionarJogoActionPerformed
 
+    private void jButtonEditarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarJogoActionPerformed
+        int linhaSelecionada = jTableEstoque.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um jogo na tabela para editar!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Pega o ID que guardamos lá no mouseClicked
+        int id = Integer.parseInt(jTextFieldNomeJogo.getName());
+        String titulo = jTextFieldNomeJogo.getText().trim();
+        double preco = Double.parseDouble(jTextFieldPreco.getText().trim().replace(",", "."));
+        int quantidade = Integer.parseInt(jTextFieldQtd.getText().trim());
+
+        JogoRepository repo = new JogoRepository();
+        if (repo.atualizar(id, titulo, preco, quantidade)) {
+            JOptionPane.showMessageDialog(this, "Jogo atualizado com sucesso!");
+            limparCampos();
+            atualizarTabela();
+        }
+    }//GEN-LAST:event_jButtonEditarJogoActionPerformed
+
+    private void jButtonApagarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApagarJogoActionPerformed
+        int linhaSelecionada = jTableEstoque.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um jogo na tabela para excluir!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Pergunta de confirmação para evitar cliques acidentais
+        int confirmacao = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja apagar este jogo do estoque?", "Confirmar Exclusão", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            int id = Integer.parseInt(jTextFieldNomeJogo.getName());
+
+            JogoRepository repo = new JogoRepository();
+            if (repo.excluir(id)) {
+                JOptionPane.showMessageDialog(this, "Jogo removido do estoque.");
+                limparCampos();
+                atualizarTabela();
+            }
+        }
+    }//GEN-LAST:event_jButtonApagarJogoActionPerformed
+
+    private void jTableEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEstoqueMouseClicked
+        int linhaSelecionada = jTableEstoque.getSelectedRow();
+
+        if (linhaSelecionada != -1) {
+            String id = jTableEstoque.getValueAt(linhaSelecionada, 0).toString();
+            String titulo = jTableEstoque.getValueAt(linhaSelecionada, 1).toString();
+            String preco = jTableEstoque.getValueAt(linhaSelecionada, 2).toString();
+            String quantidade = jTableEstoque.getValueAt(linhaSelecionada, 3).toString();
+
+            jTextFieldNomeJogo.setText(titulo);
+            jTextFieldPreco.setText(preco);
+            jTextFieldQtd.setText(quantidade);
+
+            //guardando temporariamente para usar de mascara
+            jTextFieldNomeJogo.setName(id);
+        }
+    }//GEN-LAST:event_jTableEstoqueMouseClicked
+
+    public void atualizarTabela() {
+        JogoRepository repo = new JogoRepository();
+        List<Object[]> jogos = repo.listarTodos();
+        DefaultTableModel modelo = (DefaultTableModel) jTableEstoque.getModel();
+        modelo.setRowCount(0);
+        for (Object[] jogo : jogos) {
+            modelo.addRow(jogo);
+        }
+    }
+
+    private void limparCampos() {
+        jTextFieldNomeJogo.setText("");
+        jTextFieldPreco.setText("");
+        jTextFieldQtd.setText("");
+        jTextFieldNomeJogo.setName(""); // Limpa o ID guardado
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarJogo;
+    private javax.swing.JButton jButtonApagarJogo;
+    private javax.swing.JButton jButtonEditarJogo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
